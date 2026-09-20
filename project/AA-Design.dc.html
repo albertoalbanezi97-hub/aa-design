@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/a-a-design-system-e1c41903-2f24-40c9-9108-ea3c3d11a322/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/a-a-design-system-e1c41903-2f24-40c9-9108-ea3c3d11a322/tokens/colors.css">
+<link rel="stylesheet" href="_ds/a-a-design-system-e1c41903-2f24-40c9-9108-ea3c3d11a322/tokens/typography.css">
+<link rel="stylesheet" href="_ds/a-a-design-system-e1c41903-2f24-40c9-9108-ea3c3d11a322/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/a-a-design-system-e1c41903-2f24-40c9-9108-ea3c3d11a322/styles.css">
+<script src="_ds/a-a-design-system-e1c41903-2f24-40c9-9108-ea3c3d11a322/_ds_bundle.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper-50); }
+  a { color: var(--brass-500); }
+  a:hover { color: var(--charcoal-900); }
+  @keyframes kenburns { 0% { transform: scale(1); } 100% { transform: scale(1.09); } }
+  @keyframes homeZoomFade { 0% { opacity: 1; } 9.99% { opacity: 1; } 10% { opacity: 0; } 99.99% { opacity: 0; } }
+  @keyframes homeZoomIn { 0% { transform: scale(1); } 10% { transform: scale(1.14); } }
+  @keyframes homeZoomOut { 0% { transform: scale(1.14); } 10% { transform: scale(1); } }
+  @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  @keyframes marqueeRev { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-thumb { background: var(--sand-200); border-radius: 8px; }
+</style>
+</helmet>
+<div style="font-family: var(--font-sans-body); background: var(--surface-page); min-height: 100vh; color: var(--text-body);">
+
+  <header style="position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 84px; background: var(--surface-page); border-bottom: 1px solid var(--border-subtle);">
+    <div style="display: flex; align-items: center; cursor: pointer;" onClick="{{ () => setTab('home') }}">
+      <img src="assets/logo-source-original.jpg" style="height: 50px; width: 50px; object-fit: contain; border-radius: var(--radius-sm);" alt="AA-Design mark">
+    </div>
+    <nav style="display: flex; gap: 30px;">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="7">
+        <a onClick="{{ t.onClick }}" style="{{ t.style }}" style-hover="{{ t.hoverStyle }}">{{ t.label }}</a>
+      </sc-for>
+    </nav>
+  </header>
+
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <main style="animation: fadeUp var(--duration-slow) var(--ease-standard);">
+      <section style="background: var(--charcoal-900); color: var(--paper-50); padding: 96px 40px 64px; text-align: center;">
+        <div style="font-family: var(--font-serif-display); font-weight: 600; font-size: 26px; color: var(--paper-50); margin-bottom: 14px; letter-spacing: -0.01em;">AA-Design</div>
+        <div style="font-size: var(--text-xs); letter-spacing: var(--tracking-wider); text-transform: uppercase; color: var(--brass-500); font-weight: 600; margin-bottom: 20px;">Residential Design &middot; Ontario</div>
+        <h1 style="font-family: var(--font-serif-display); font-weight: 600; font-size: clamp(34px, 5vw, 64px); line-height: 1.1; margin: 0 auto; max-width: 980px; letter-spacing: -0.01em;">Remodel &middot; Add to Rear or Side &middot; Legalize a Basement</h1>
+      </section>
+      <section style="position: relative; height: 62vh; min-height: 380px; overflow: hidden; background: var(--charcoal-900);">
+        <sc-for list="{{ homeSlides }}" as="h" hint-placeholder-count="10">
+          <img src="{{ h.src }}" alt="AA-Design residential project" style="{{ h.style }}">
+        </sc-for>
+        <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(30,30,30,0.05) 0%, rgba(30,30,30,0.35) 100%); z-index: 5;"></div>
+      </section>
+      <div style="background: var(--surface-page); padding: 22px 0; overflow: hidden; border-bottom: 0.5px solid var(--charcoal-900); white-space: nowrap;">
+        <div style="display: inline-flex; animation: marquee 26s linear infinite;">
+          <span style="display: inline-flex; align-items: center; gap: 18px; padding-right: 18px; font-family: var(--font-sans-body); font-size: var(--text-lg); color: var(--charcoal-700); font-weight: 500;">
+            <span>AA-Design provides architectural design services across Ontario</span><span style="color: var(--brass-500);">&middot;</span>
+            <span>Design with certainty. Build with confidence</span><span style="color: var(--brass-500);">&middot;</span>
+            <span>Affordable Permit Drawings</span><span style="color: var(--brass-500);">&middot;</span>
+            <span>Building Permit Applications</span><span style="color: var(--brass-500);">&middot;</span>
+          </span>
+          <span style="display: inline-flex; align-items: center; gap: 18px; padding-right: 18px; font-family: var(--font-sans-body); font-size: var(--text-lg); color: var(--charcoal-700); font-weight: 500;">
+            <span>AA-Design provides architectural design services across Ontario</span><span style="color: var(--brass-500);">&middot;</span>
+            <span>Design with certainty. Build with confidence</span><span style="color: var(--brass-500);">&middot;</span>
+            <span>Affordable Permit Drawings</span><span style="color: var(--brass-500);">&middot;</span>
+            <span>Building Permit Applications</span><span style="color: var(--brass-500);">&middot;</span>
+          </span>
+        </div>
+      </div>
+      <div style="background: var(--surface-page); padding: 20px 0; overflow: hidden; border-bottom: 0.5px solid var(--charcoal-900); white-space: nowrap;">
+        <div style="display: inline-flex; animation: marqueeRev 102s linear infinite;">
+          <span style="display: inline-flex; gap: 14px; padding-right: 14px;">
+            <sc-for list="{{ allGalleryImages }}" as="g" hint-placeholder-count="39">
+              <img src="{{ g.src }}" alt="AA-Design gallery" style="height: 128px; width: 172px; object-fit: cover; border-radius: var(--radius-sm); flex-shrink: 0;">
+            </sc-for>
+          </span>
+          <span style="display: inline-flex; gap: 14px; padding-right: 14px;">
+            <sc-for list="{{ allGalleryImages }}" as="g" hint-placeholder-count="39">
+              <img src="{{ g.src }}" alt="AA-Design gallery" style="height: 128px; width: 172px; object-fit: cover; border-radius: var(--radius-sm); flex-shrink: 0;">
+            </sc-for>
+          </span>
+        </div>
+      </div>
+
+      <section style="background: var(--charcoal-900); color: var(--paper-50); padding: 96px 40px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 22px;">
+        <div style="width: 64px; border-top: 3px solid var(--brass-500); border-bottom: 1px solid var(--charcoal-700); padding-bottom: 6px;"></div>
+        <h2 style="font-family: var(--font-serif-display); font-weight: 600; font-size: clamp(28px, 3.4vw, 42px); margin: 0; max-width: 640px;">Trusted, certified, local.</h2>
+        <p style="font-size: var(--text-lg); line-height: var(--leading-relaxed); color: var(--sand-200); max-width: 640px; margin: 0;">Two decades of hands-on residential design across Ontario. Every drawing set is prepared to meet the Ontario Building Code and move cleanly through municipal review &mdash; clear, accurate, and built to get approved.</p>
+        <button onClick="{{ () => setTab('contact') }}" style="margin-top: 10px; background: var(--brass-500); color: var(--paper-50); border: none; border-bottom: 3px solid var(--paper-50); border-radius: var(--radius-pill); padding: 16px 34px; font-family: var(--font-sans-body); font-weight: 600; font-size: var(--text-sm); letter-spacing: var(--tracking-wide); text-transform: uppercase; cursor: pointer; transition: background var(--duration-base) var(--ease-standard);" style-hover="background: var(--paper-50); color: var(--charcoal-900); border-bottom-color: var(--brass-500);">Book a Call</button>
+      </section>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isTypes }}" hint-placeholder-val="{{ false }}">
+    <main style="padding: 88px 40px 100px; animation: fadeUp var(--duration-slow) var(--ease-standard);">
+      <div style="text-align: center; max-width: 720px; margin: 0 auto 64px;">
+        <div style="font-size: var(--text-xs); letter-spacing: var(--tracking-wider); text-transform: uppercase; color: var(--brass-500); font-weight: 600; margin-bottom: 14px;">Project Types</div>
+        <h1 style="font-family: var(--font-serif-display); font-weight: 600; font-size: clamp(30px, 4vw, 44px); color: var(--charcoal-900); margin: 0 0 14px;">Every project, drawn right.</h1>
+        <p style="font-size: var(--text-base); line-height: var(--leading-relaxed); color: var(--charcoal-700); margin: 0;">From a backyard deck to a full custom home, every drawing set is built to meet Ontario's Building Code and move your project through review.</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; max-width: 1280px; margin: 0 auto;">
+        <sc-for list="{{ projectTypes }}" as="p" hint-placeholder-count="9">
+          <div style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-card); transition: transform var(--duration-base) var(--ease-standard), box-shadow var(--duration-base) var(--ease-standard);" style-hover="transform: translateY(-6px); box-shadow: var(--shadow-lifted);">
+            <div style="aspect-ratio: 4/3; overflow: hidden; position: relative;" onMouseEnter="{{ p.hoverIn }}" onMouseLeave="{{ p.hoverOut }}">
+              <img src="{{ p.img }}" alt="{{ p.title }}" style="width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 500ms var(--ease-standard);" style-hover="transform: scale(1.08);">
+              <sc-if value="{{ p.caption }}" hint-placeholder-val="{{ false }}">
+                <div style="{{ p.captionStyle }}">{{ p.caption }}</div>
+              </sc-if>
+            </div>
+            <div style="padding: 24px;">
+              <h3 style="font-family: var(--font-serif-display); font-size: var(--text-xl); color: var(--charcoal-900); margin: 0 0 10px; font-weight: 600;">{{ p.title }}</h3>
+              <p style="font-size: var(--text-sm); line-height: var(--leading-relaxed); color: var(--charcoal-700); margin: 0;">{{ p.text }}</p>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isProcess }}" hint-placeholder-val="{{ false }}">
+    <main style="padding: 88px 40px 100px; animation: fadeUp var(--duration-slow) var(--ease-standard);">
+      <div style="max-width: 1280px; margin: 0 auto; display: flex; gap: 72px; align-items: flex-start; flex-wrap: wrap;">
+        <div style="flex: 1 1 420px; min-width: 320px;">
+          <div style="font-size: var(--text-xs); letter-spacing: var(--tracking-wider); text-transform: uppercase; color: var(--brass-500); font-weight: 600; margin-bottom: 14px;">Our Process</div>
+          <h1 style="font-family: var(--font-serif-display); font-weight: 600; font-size: clamp(30px, 4vw, 44px); color: var(--charcoal-900); margin: 0 0 40px;">From first call to permit-ready.</h1>
+          <sc-for list="{{ processSteps }}" as="s" hint-placeholder-count="6">
+            <div style="display: flex; gap: 22px; align-items: flex-start; border-bottom: 1px solid var(--border-subtle); padding: 22px 0;">
+              <span style="font-family: var(--font-serif-display); font-size: var(--text-2xl); color: var(--brass-500); font-weight: 600; flex-shrink: 0; width: 44px;">{{ s.n }}</span>
+              <div>
+                <div style="font-size: var(--text-lg); color: var(--charcoal-900); font-weight: 600; margin-bottom: 6px;">{{ s.title }}</div>
+                <div style="font-size: var(--text-sm); line-height: var(--leading-relaxed); color: var(--charcoal-700);">{{ s.text }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="flex: 1 1 380px; min-width: 300px; position: sticky; top: 110px;">
+          <div style="border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-lifted); border-bottom: 3px solid var(--brass-500);">
+            <img src="assets/process.jpg" alt="AA-Design process" style="width: 100%; display: block;">
+          </div>
+        </div>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isGallery }}" hint-placeholder-val="{{ false }}">
+    <main style="padding: 88px 40px 100px; animation: fadeUp var(--duration-slow) var(--ease-standard);">
+      <div style="text-align: center; max-width: 720px; margin: 0 auto 56px;">
+        <div style="font-size: var(--text-xs); letter-spacing: var(--tracking-wider); text-transform: uppercase; color: var(--brass-500); font-weight: 600; margin-bottom: 14px;">Gallery</div>
+        <h1 style="font-family: var(--font-serif-display); font-weight: 600; font-size: clamp(30px, 4vw, 44px); color: var(--charcoal-900); margin: 0;">Selected work.</h1>
+      </div>
+      <div style="max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px;">
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 300px; gap: 14px;">
+          <sc-for list="{{ galleryG1 }}" as="g" hint-placeholder-count="20">
+            <div style="overflow: hidden; border-radius: var(--radius-sm); position: relative; background: var(--sand-200);" onMouseEnter="{{ g.hoverIn }}" onMouseLeave="{{ g.hoverOut }}">
+              <img src="{{ g.src }}" alt="AA-Design residential project" style="width: 100%; height: 100%; object-fit: contain; display: block; transition: transform 500ms var(--ease-standard);" style-hover="transform: scale(1.06);">
+              <sc-if value="{{ g.caption }}" hint-placeholder-val="{{ false }}">
+                <div style="{{ g.captionStyle }}">{{ g.caption }}</div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+        <div style="width: 100%; border-top: 1px solid var(--border-subtle);"></div>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 240px; gap: 14px;">
+          <sc-for list="{{ galleryG2 }}" as="g" hint-placeholder-count="16">
+            <div style="overflow: hidden; border-radius: var(--radius-sm); position: relative;" onMouseEnter="{{ g.hoverIn }}" onMouseLeave="{{ g.hoverOut }}">
+              <img src="{{ g.src }}" alt="AA-Design residential project" style="width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 500ms var(--ease-standard);" style-hover="transform: scale(1.08);">
+              <sc-if value="{{ g.caption }}" hint-placeholder-val="{{ false }}">
+                <div style="{{ g.captionStyle }}">{{ g.caption }}</div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+        <div style="width: 100%; border-top: 1px solid var(--border-subtle);"></div>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: 360px; gap: 14px;">
+          <sc-for list="{{ galleryG3 }}" as="g" hint-placeholder-count="2">
+            <div style="overflow: hidden; border-radius: var(--radius-sm); position: relative;" onMouseEnter="{{ g.hoverIn }}" onMouseLeave="{{ g.hoverOut }}">
+              <img src="{{ g.src }}" alt="AA-Design residential project" style="width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 500ms var(--ease-standard);" style-hover="transform: scale(1.08);">
+              <sc-if value="{{ g.caption }}" hint-placeholder-val="{{ false }}">
+                <div style="{{ g.captionStyle }}">{{ g.caption }}</div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isPermit }}" hint-placeholder-val="{{ false }}">
+    <main style="padding: 88px 40px 100px; animation: fadeUp var(--duration-slow) var(--ease-standard);">
+      <div style="max-width: 1100px; margin: 0 auto; display: flex; gap: 64px; flex-wrap: wrap;">
+        <div style="flex: 1 1 480px; min-width: 300px;">
+          <div style="font-size: var(--text-xs); letter-spacing: var(--tracking-wider); text-transform: uppercase; color: var(--brass-500); font-weight: 600; margin-bottom: 14px;">Building Permit Applications</div>
+          <h1 style="font-family: var(--font-serif-display); font-weight: 600; font-size: clamp(28px, 3.6vw, 40px); color: var(--charcoal-900); margin: 0 0 34px;">Did you know?</h1>
+          <p style="font-size: var(--text-base); line-height: var(--leading-relaxed); color: var(--charcoal-700); margin: 0 0 20px;">Building without a permit can mean fines, stop-work orders, and real legal headaches. If there's ever a fire, flood, or injury, an unpermitted project can void your insurance coverage entirely &mdash; getting it right from the start is always the cheaper path.</p>
+          <p style="font-size: var(--text-base); line-height: var(--leading-relaxed); color: var(--charcoal-700); margin: 0 0 44px;">Municipalities have full authority to enforce the Ontario Building Code and local zoning bylaws, including stop-work orders and fines that can run into the thousands. Starting permit-ready protects your budget and your timeline.</p>
+          <h2 style="font-family: var(--font-serif-display); font-weight: 600; font-size: var(--text-2xl); color: var(--charcoal-900); margin: 0 0 18px;">Permits are typically required for:</h2>
+          <p style="font-size: var(--text-base); line-height: var(--leading-relaxed); color: var(--charcoal-700); margin: 0;">Pools, decks, sheds and prefab structures, detached garages and carports, pergolas and gazebos, demolition, basement finishing, additions and renovations, foundation repair and waterproofing, change of use and conversions, and correcting fire code violations.</p>
+        </div>
+        <div style="flex: 0 0 260px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; background: var(--sand-200); border-radius: var(--radius-md); padding: 40px 28px; align-self: flex-start; position: sticky; top: 130px;">
+          <p style="font-size: var(--text-sm); line-height: var(--leading-relaxed); color: var(--charcoal-900); margin: 0; text-align: center; font-weight: 500;">Protect your investment. Let's get your project started right.</p>
+          <button onClick="{{ () => setTab('contact') }}" style="background: var(--charcoal-900); color: var(--paper-50); border: none; border-bottom: 3px solid var(--brass-500); border-radius: var(--radius-pill); padding: 16px 30px; font-family: var(--font-sans-body); font-weight: 600; font-size: var(--text-sm); letter-spacing: var(--tracking-wide); text-transform: uppercase; cursor: pointer; transition: background var(--duration-base) var(--ease-standard);" style-hover="background: var(--brass-500); border-bottom-color: var(--charcoal-900);">Book a Call</button>
+        </div>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+    <main style="padding: 88px 40px 110px; animation: fadeUp var(--duration-slow) var(--ease-standard);">
+      <div style="text-align: center; max-width: 640px; margin: 0 auto 40px;">
+        <div style="font-size: var(--text-xs); letter-spacing: var(--tracking-wider); text-transform: uppercase; color: var(--brass-500); font-weight: 600; margin-bottom: 14px;">Contact Us</div>
+        <h1 style="font-family: var(--font-serif-display); font-weight: 600; font-size: clamp(30px, 4vw, 44px); color: var(--charcoal-900); margin: 0;">Let's talk about your project.</h1>
+      </div>
+
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; margin-bottom: 40px;">
+        <button style="background: var(--brass-500); color: var(--paper-50); border: none; border-bottom: 4px solid var(--charcoal-900); border-radius: var(--radius-pill); padding: 22px 52px; font-family: var(--font-sans-body); font-weight: 600; font-size: var(--text-lg); letter-spacing: var(--tracking-wide); text-transform: uppercase; cursor: pointer; box-shadow: var(--shadow-lifted); transition: background var(--duration-base) var(--ease-standard), transform var(--duration-base) var(--ease-standard);" style-hover="background: var(--charcoal-900); transform: translateY(-3px);">Book a Call</button>
+      </div>
+      <div style="max-width: 760px; margin: 0 auto 72px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); background: var(--surface-sunken); min-height: 420px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 40px;">
+        <div>
+          <div style="font-family: var(--font-serif-display); font-size: var(--text-xl); color: var(--charcoal-900); margin-bottom: 10px;">Calendly booking</div>
+          <p style="font-size: var(--text-sm); color: var(--charcoal-700); max-width: 380px; margin: 0 auto;">Your live scheduling calendar will be embedded here &mdash; pick a time that works and we'll confirm by email.</p>
+        </div>
+      </div>
+
+      <div style="max-width: 640px; margin: 0 auto; text-align: center;">
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 36px;">
+          <div style="flex: 1; height: 1px; background: var(--border-subtle);"></div>
+          <span style="font-size: var(--text-xs); letter-spacing: var(--tracking-wider); text-transform: uppercase; color: var(--charcoal-700);">or</span>
+          <div style="flex: 1; height: 1px; background: var(--border-subtle);"></div>
+        </div>
+        <button style="background: transparent; color: var(--charcoal-900); border: 1.5px solid var(--charcoal-900); border-radius: var(--radius-pill); padding: 16px 34px; font-family: var(--font-sans-body); font-weight: 600; font-size: var(--text-sm); letter-spacing: var(--tracking-wide); text-transform: uppercase; cursor: pointer; margin-bottom: 32px; transition: background var(--duration-base) var(--ease-standard), color var(--duration-base) var(--ease-standard);" style-hover="background: var(--charcoal-900); color: var(--paper-50);">Send an Email</button>
+
+        <sc-if value="{{ formSubmitted }}" hint-placeholder-val="{{ false }}">
+          <div style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 40px; box-shadow: var(--shadow-card);">
+            <div style="font-family: var(--font-serif-display); font-size: var(--text-xl); color: var(--charcoal-900); margin-bottom: 8px;">Thank you.</div>
+            <p style="font-size: var(--text-sm); color: var(--charcoal-700); margin: 0;">We'll follow up within one business day.</p>
+          </div>
+        </sc-if>
+        <sc-if value="{{ !formSubmitted }}" hint-placeholder-val="{{ true }}">
+          <form onSubmit="{{ handleSubmit }}" style="display: flex; flex-direction: column; gap: 18px; text-align: left;">
+            <div>
+              <label style="display: block; font-size: var(--text-xs); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--charcoal-700); font-weight: 600; margin-bottom: 8px;">Name</label>
+              <input required="{{ true }}" value="{{ form.name }}" onChange="{{ setField('name') }}" style="width: 100%; padding: 14px 16px; border: 1.5px solid var(--charcoal-900); border-radius: var(--radius-sm); font-family: var(--font-sans-body); font-size: var(--text-base); background: var(--surface-card); color: var(--charcoal-900);">
+            </div>
+            <div>
+              <label style="display: block; font-size: var(--text-xs); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--charcoal-700); font-weight: 600; margin-bottom: 8px;">Email Address</label>
+              <input required="{{ true }}" type="email" value="{{ form.email }}" onChange="{{ setField('email') }}" style="width: 100%; padding: 14px 16px; border: 1.5px solid var(--charcoal-900); border-radius: var(--radius-sm); font-family: var(--font-sans-body); font-size: var(--text-base); background: var(--surface-card); color: var(--charcoal-900);">
+            </div>
+            <div>
+              <label style="display: block; font-size: var(--text-xs); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--charcoal-700); font-weight: 600; margin-bottom: 8px;">City / Town</label>
+              <input required="{{ true }}" value="{{ form.city }}" onChange="{{ setField('city') }}" style="width: 100%; padding: 14px 16px; border: 1.5px solid var(--charcoal-900); border-radius: var(--radius-sm); font-family: var(--font-sans-body); font-size: var(--text-base); background: var(--surface-card); color: var(--charcoal-900);">
+            </div>
+            <div>
+              <label style="display: block; font-size: var(--text-xs); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--charcoal-700); font-weight: 600; margin-bottom: 8px;">Message</label>
+              <textarea required="{{ true }}" value="{{ form.message }}" onChange="{{ setField('message') }}" rows="5" style="width: 100%; padding: 14px 16px; border: 1.5px solid var(--charcoal-900); border-radius: var(--radius-sm); font-family: var(--font-sans-body); font-size: var(--text-base); background: var(--surface-card); color: var(--charcoal-900); resize: vertical;"></textarea>
+            </div>
+            <button type="submit" style="margin-top: 8px; align-self: center; background: var(--charcoal-900); color: var(--paper-50); border: none; border-bottom: 3px solid var(--brass-500); border-radius: var(--radius-pill); padding: 16px 44px; font-family: var(--font-sans-body); font-weight: 600; font-size: var(--text-sm); letter-spacing: var(--tracking-wide); text-transform: uppercase; cursor: pointer; transition: background var(--duration-base) var(--ease-standard);" style-hover="background: var(--brass-500);">Send</button>
+          </form>
+        </sc-if>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isFaq }}" hint-placeholder-val="{{ false }}">
+    <main style="padding: 88px 40px 110px; animation: fadeUp var(--duration-slow) var(--ease-standard);">
+      <div style="text-align: center; max-width: 680px; margin: 0 auto 56px;">
+        <div style="font-size: var(--text-xs); letter-spacing: var(--tracking-wider); text-transform: uppercase; color: var(--brass-500); font-weight: 600; margin-bottom: 14px;">FAQ</div>
+        <h1 style="font-family: var(--font-serif-display); font-weight: 600; font-size: clamp(30px, 4vw, 44px); color: var(--charcoal-900); margin: 0 0 14px;">Frequently Asked Questions</h1>
+        <p style="font-size: var(--text-base); color: var(--charcoal-700); margin: 0;">Straight answers to the questions we hear most.</p>
+      </div>
+      <div style="max-width: 780px; margin: 0 auto;">
+        <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="6">
+          <div style="border-bottom: 1px solid var(--border-subtle);">
+            <button onClick="{{ f.toggle }}" style="width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 20px; background: none; border: none; padding: 24px 4px; text-align: left; cursor: pointer; font-family: var(--font-serif-display); font-size: var(--text-lg); color: var(--charcoal-900); font-weight: 600;" style-hover="color: var(--brass-500);">
+              <span>{{ f.q }}</span>
+              <span style="{{ f.iconStyle }}">+</span>
+            </button>
+            <div style="{{ f.bodyStyle }}">
+              <p style="font-size: var(--text-sm); line-height: var(--leading-relaxed); color: var(--charcoal-700); margin: 0 0 24px;">{{ f.a }}</p>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </main>
+  </sc-if>
+
+  <footer style="background: var(--charcoal-900); color: var(--paper-50); padding: 56px 40px 30px; font-family: var(--font-sans-body);">
+    <div style="max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 32px; margin-bottom: 32px;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <img src="assets/logo-source-original.jpg" style="height: 40px; width: 40px; object-fit: contain; border-radius: var(--radius-sm);" alt="AA-Design mark">
+        <span style="font-family: var(--font-serif-display); font-size: var(--text-lg); font-weight: 600;">AA-Design</span>
+      </div>
+      <div style="display: flex; gap: 40px; flex-wrap: wrap; font-size: var(--text-sm); color: var(--sand-200);">
+        <span>{{ contactEmail }}</span>
+        <span>{{ contactPhone }}</span>
+      </div>
+    </div>
+    <div style="max-width: 1280px; margin: 0 auto; border-top: 1px solid var(--charcoal-700); padding-top: 18px; font-size: var(--text-xs); color: var(--charcoal-700);">&copy; 2026 AA-Design. All rights reserved.</div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;contactEmail&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;info.aadesign@yahoo.com&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contact&quot;},&quot;contactPhone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;(647) 878-3117&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contact&quot;},&quot;slideSeconds&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:10,&quot;min&quot;:3,&quot;max&quot;:20,&quot;step&quot;:1,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Hero slideshow&quot;},&quot;alwaysShowCaptions&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Gallery&quot;}}">
+class Component extends DCLogic {
+  state = {
+    activeTab: 'home',
+    formSubmitted: false,
+    form: { name: '', email: '', city: '', message: '' },
+    faqOpen: null,
+    hoverKey: null
+  };
+
+  setTab = (key) => this.setState({ activeTab: key });
+  hoverIn = (key) => () => this.setState({ hoverKey: key });
+  hoverOut = () => this.setState({ hoverKey: null });
+
+  setField = (field) => (e) => {
+    const val = e.target.value;
+    this.setState(s => ({ form: { ...s.form, [field]: val } }));
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.setState({ formSubmitted: true });
+  };
+
+  toggleFaq = (i) => this.setState(s => ({ faqOpen: s.faqOpen === i ? null : i }));
+
+  renderVals() {
+    const active = this.state.activeTab;
+    const hoverKey = this.state.hoverKey;
+    const captionStyle = (key, light, off) => ({
+      position: 'absolute', top: ((off && off.top) || 10) + 'px', background: 'transparent',
+      color: (off && off.dark) ? 'var(--charcoal-900)' : (light ? 'var(--paper-50)' : 'var(--charcoal-900)'),
+      ...(light ? { right: '12px', textAlign: 'right' } : { left: (((off && off.left) || 10)) + 'px' }),
+      fontSize: '11px', lineHeight: 1.35, fontWeight: 600, maxWidth: 'calc(100% - 24px)',
+      opacity: (this.props.alwaysShowCaptions || hoverKey === key) ? 1 : 0, transition: 'opacity var(--duration-base) var(--ease-standard)',
+      pointerEvents: 'none',
+      textShadow: (light && !(off && off.dark)) ? '0 1px 3px rgba(30,30,30,0.9), 0 0 8px rgba(30,30,30,0.7)' : '0 1px 2px var(--paper-50), 0 0 6px var(--paper-50)'
+    });
+    const tabDefs = [
+      ['home', 'Home'], ['types', 'Project Types'], ['process', 'Process'],
+      ['gallery', 'Gallery'], ['permit', 'Permit App.'], ['contact', 'Contact Us'], ['faq', 'FAQ']
+    ];
+    const navBase = {
+      cursor: 'pointer', fontFamily: 'var(--font-sans-body)', fontSize: '13px', fontWeight: 600,
+      letterSpacing: 'var(--tracking-wide)', textTransform: 'uppercase', paddingBottom: '4px',
+      textDecoration: 'none', transition: 'color var(--duration-base) var(--ease-standard), border-color var(--duration-base) var(--ease-standard)'
+    };
+    const tabs = tabDefs.map(([key, label]) => {
+      const isActive = key === active;
+      return {
+        key, label,
+        onClick: () => this.setTab(key),
+        style: { ...navBase, color: isActive ? 'var(--charcoal-900)' : 'var(--charcoal-700)', borderBottom: isActive ? '3px solid var(--brass-500)' : '3px solid transparent' },
+        hoverStyle: { color: 'var(--charcoal-900)' }
+      };
+    });
+
+    const homeImgs = ['home-01.jpg','home-02.jpeg','home-03.jpg','home-04.jpg','home-05.jpeg','home-06.jpg','home-07.jpg','home-08.jpg','home-09.jpg','home-10.jpg'];
+    const slideSec = this.props.slideSeconds ?? 10;
+    const homeSlideDur = homeImgs.length * slideSec;
+    const zoomDirs = ['homeZoomIn','homeZoomOut','homeZoomOut','homeZoomIn','homeZoomIn','homeZoomOut','homeZoomIn','homeZoomOut','homeZoomOut','homeZoomIn'];
+    const homeSlides = homeImgs.map((f, i) => ({
+      src: `assets/home/${f}`,
+      style: {
+        position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block',
+        animation: `homeZoomFade ${homeSlideDur}s step-end infinite, ${zoomDirs[i % zoomDirs.length]} ${homeSlideDur}s linear infinite`,
+        animationDelay: `${-i * slideSec}s, ${-i * slideSec}s`
+      }
+    }));
+
+    const projectTypes = [
+      { img: 'assets/pt-adu.jpg', title: 'ADU & Secondary Suite', text: 'Legal rental or family suite, drawn right \u2014 layouts, egress and fire separations handled from day one.', caption: 'Legalizing second unit dwelling in an unfinished basement accessed by existing side entrance of detached brick dwelling' },
+      { img: 'assets/pt-deck-porch.jpg', title: 'Deck & Porch', text: "Code-compliant deck and porch drawings that meet Ontario's building code and keep your project moving.", caption: 'Rebuilding existing wood stair and deck above driveway and garage of a detached single family dwelling with same features, materials and dimensions' },
+      { img: 'assets/pt-garage-carport.jpg', title: 'Garage & Carport', text: 'Detached garage or carport, drawn to the details your municipality expects, at any scale.', caption: '' },
+      { img: 'assets/pt-basement.jpeg', title: 'Basement Finishing', text: 'Turn an unfinished basement into a bedroom, suite, or family room \u2014 with egress and fire safety built in.', caption: 'Building new rear deck with metal stair and side entrance to the basement with concrete stair and making interior alterations. Legalizing a secondary suite in the basement of detached house from new side stair and entrance.' },
+      { img: 'assets/pt-home-addition.jpeg', title: 'Home Addition', text: 'Growing up, out, or back \u2014 addition drawings that get you more space without the runaround.', caption: 'Building rear addition to existing 1 storey brick dwelling, adding new storey atop and making exterior aesthetic with interior alterations' },
+      { img: 'assets/pt-barndominium.jpg', title: 'Barndominium', text: 'Shop home or live-work space, balanced between lifestyle and code from the first sketch.', caption: '' },
+      { img: 'assets/pt-custom-home.jpg', title: 'Custom Home', text: 'A full permit set for your dream build, with code compliance designed in from the start.', caption: 'Building new three storey siding and stucco dwelling on vacant property in township of tiny.' },
+      { img: 'assets/pt-interior-alteration.jpg', title: 'Interior Alteration', text: 'Wall removals and layout changes, drawn with the structural detail your renovation needs.', caption: '' },
+      { img: 'assets/pt-retroactive.jpg', title: 'Retroactive', text: "Built without a permit, or facing a stop-work order? We'll bring your project into compliance.", caption: 'Application to comply to obtain a building permit for a duplex of split 2 storey siding detached dwelling and finishing the basement of main dwelling' }
+    ];
+
+    const processSteps = [
+      { n: '01', title: 'First Conversation', text: 'We learn about your project, confirm what\u2019s required, and send you a clear quote.' },
+      { n: '02', title: 'Site Measure', text: 'If your home needs an accurate as-built record, we arrange a fast laser scan to capture every dimension.' },
+      { n: '03', title: 'Quote Accepted', text: 'Once you give the green light, your drawings go into production \u2014 on the timeline we promised.' },
+      { n: '04', title: 'Design Review', text: 'You review the initial design and request any changes, free of charge, before we finalize anything.' },
+      { n: '05', title: 'Drawings Delivered', text: 'Sealed, permit-ready drawings arrive by email, along with everything your municipality needs to submit.' },
+      { n: '06', title: 'Permit Support', text: 'If the building department comes back with comments, we resolve them with the city on your behalf.' }
+    ];
+
+    const g1Defs = [
+      ['n1-01.jpg', 'Building second storey atop existing bungalow.'],
+      ['n1-02.jpeg', 'Adding new storey atop existing 1 storey brick dwelling'],
+      ['n1-03.jpg', 'Building new car garage at the rear yard of detached dwelling & adding gable roof to its existing roof.'],
+      ['n1-04.jpeg', 'Legalizing secondary suite in the basement of detached house.'],
+      ['n1-05.jpg', 'New addition for basement, main & second floors with rear deck.'],
+      ['n1-06.jpg', 'Building new 2 storey custom home with modern style and 2 car garage.'],
+      ['n1-07.jpeg', 'Legalizing second unit at the basement of detached dwelling unit and making interior alterations.'],
+      ['n1-08.jpg', 'Legalizing second unit at the basement of detached dwelling unit and making interior alterations.'],
+      ['n1-09.jpg', 'Making interior alterations in units of the apartment building located in east of Toronto.'],
+      ['n1-10.jpg', 'Legalizing second unit in the basement of semi-detached brick dwelling'],
+      ['n1-11.jpg', 'Legalizing secondary suite in the basement of detached house.'],
+      ['n1-12.jpg', 'Adding 2 storeys atop of existing detached dwelling.'],
+      ['n1-13.jpg', 'Rebuilding wood stair and deck above garage of a detached dwelling.'],
+      ['n1-14.jpg', 'Legalizing second unit dwelling in an unfinished basement.'],
+      ['n1-15.jpg', 'Removing third floor rear balcony and applying for OTC'],
+      ['n1-16.jpg', 'Legalizing duplex residential building and applying for OTC'],
+      ['n1-17.jpg', 'New building of mixed use condominium, commercial and residential suites above.'],
+      ['n1-18.jpg', 'Renovating basement, remodeling main and second floors.'],
+      ['n1-19.jpg', 'Building new three storey custom home by Georgian Bay.'],
+      ['n1-20.jpg', 'New 2 storey custom home with modern style for elevations and green roof on top']
+    ];
+    const g2Defs = [
+      ['n2-01.jpg', 'Renovating the existing semi detached house for the main and second floors and making interior alterations'],
+      ['n2-02.jpg', 'Basement underpinning and renovation of main, second and third floors remodeling for semi detached house'],
+      ['n2-03.jpg', 'New sleeping cabin by Muskoka lake with 3 car garage at the ground level & 2 bedroom unit above'],
+      ['n2-04.jpg', 'Rear addition for basement and 2 floors above for 2 storey detached house'],
+      ['n2-05.jpg', 'Adding sunroom to an existing house by Lake Muskoka'],
+      ['n2-06.jpg', 'Remodeling a boathouse belonging to a house by Lake Muskoka.'],
+      ['n2-07.jpg', 'Adding new third floor atop existing semi-detached building facing Casa Loma.'],
+      ['n2-08.jpg', 'Building rear addition & exposing stucco for existing two storey dwelling.'],
+      ['n2-09.jpg', 'Major renovation of existing heritage building & conversion to a museum for the Weston Historical Society.'],
+      ['n2-10.jpg', 'Rear addition for basement and 2 floors above with interior renovation for 2 storey detached house'],
+      ['n2-11.jpg', 'Remodeling basement, main and second floors for detached house and making aesthetic upgrade for front elevation'],
+      ['n2-12.jpg', 'New 2 storey custom home, large space in the main floor and 4 bedrooms in the second including master suite, the basement has a separate suite.'],
+      ['n2-13.jpg', 'Front elevation renewing and garage remodeling for a detached 2 storey house.'],
+      ['n2-14.jpg', 'Building one storey stucco addition at the rear for new family room and making interior alterations.'],
+      ['n2-15.jpg', 'New roof cover over rear yard patio and building new pool with cabana for 2 storey house'],
+      ['n2-16.jpg', 'Remodeling basement, main and second floor with options to build side and rear additions.']
+    ];
+    const g3Defs = [
+      ['n3-01.jpg', '104 wood-construction units on a tight, irregular lot'],
+      ['n3-02.jpg', 'Three-storey wood-frame complex matched to the surrounding streetscape']
+    ];
+    const toItems = (defs) => defs.map(([f, caption]) => ({ src: `assets/gallery/${f}`, caption }));
+    const g1 = toItems(g1Defs), g2 = toItems(g2Defs), g3 = toItems(g3Defs);
+
+    const faqDefs = [
+      ['What happens if I build without a permit?', 'Unpermitted work can trigger stop-work orders, fines, and forced teardown of finished construction \u2014 and can leave you without insurance coverage if something goes wrong. Our retroactive-permit service helps bring your project back into compliance.'],
+      ['Do I need a permit for my project?', 'In almost every case, yes \u2014 basements, decks, garages, additions, custom homes, and barndominiums all require one. We prepare code-compliant drawings so you can apply with confidence.'],
+      ['My project was already built without a permit \u2014 now what?', "You're not the first. We'll prepare the drawings your municipality needs to bring the work into compliance, legally and without drama."],
+      ['How long does the process take?', 'Timelines vary by municipality and project type, but most reviews move in a matter of weeks, not months. Our Process page walks through every stage.'],
+      ['Can you guarantee my drawings will be approved?', 'No one can guarantee approval \u2014 zoning and code review are ultimately up to your municipality. What we guarantee is a clear, code-compliant drawing set that gives your project its best shot at a smooth review.'],
+      ['Can you help legalize a rental unit?', 'Yes \u2014 we regularly prepare drawings for basement apartments and secondary suites so they meet municipal and insurance requirements.']
+    ];
+    const faqs = faqDefs.map(([q, a], i) => {
+      const open = this.state.faqOpen === i;
+      return {
+        q, a,
+        toggle: () => this.toggleFaq(i),
+        iconStyle: { fontFamily: 'var(--font-sans-body)', fontSize: '20px', color: 'var(--brass-500)', transform: open ? 'rotate(45deg)' : 'rotate(0deg)', transition: 'transform var(--duration-base) var(--ease-standard)', flexShrink: 0 },
+        bodyStyle: { maxHeight: open ? '400px' : '0px', overflow: 'hidden', transition: 'max-height var(--duration-slow) var(--ease-standard)' }
+      };
+    });
+
+    const g1Offsets = { 1: {top:31}, 2: {top:31}, 5: {top:31}, 6: {top:31}, 7: {top:31}, 8: {top:31}, 9: {top:31}, 10: {top:17}, 11: {top:20}, 12: {top:0, left:30}, 13: {top:31}, 14: {top:20}, 15: {top:31, left:48}, 16: {top:30, left:20}, 17: {top:0}, 18: {top:0}, 19: {top:31}, 20: {top:31} };
+    const withHover = (list, prefix, light, offsets) => list.map((it, i) => ({
+      ...it, key: `${prefix}-${i}`, hoverIn: this.hoverIn(`${prefix}-${i}`), hoverOut: this.hoverOut,
+      captionStyle: captionStyle(`${prefix}-${i}`, light, offsets && offsets[i + 1])
+    }));
+    const projectTypesH = withHover(projectTypes, 'pt');
+    const g1H = withHover(g1, 'g1', false, g1Offsets);
+    const g2H = withHover(g2, 'g2');
+    const g3H = withHover(g3, 'g3', true, { 2: { dark: true } });
+
+    return {
+      tabs, homeSlides, projectTypes: projectTypesH, processSteps,
+      galleryG1: g1H, galleryG2: g2H, galleryG3: g3H,
+      allGalleryImages: [...g1, ...g2, ...g3],
+      faqs,
+      isHome: active === 'home', isTypes: active === 'types', isProcess: active === 'process',
+      isGallery: active === 'gallery', isPermit: active === 'permit', isContact: active === 'contact', isFaq: active === 'faq',
+      contactEmail: this.props.contactEmail ?? 'info.aadesign@yahoo.com',
+      contactPhone: this.props.contactPhone ?? '(647) 878-3117',
+      setTab: this.setTab,
+      form: this.state.form, setField: this.setField, handleSubmit: this.handleSubmit,
+      formSubmitted: this.state.formSubmitted
+    };
+  }
+}
+</script>
+</body>
+</html>

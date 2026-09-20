@@ -1,0 +1,24 @@
+:root{
+--charcoal-900:#1E1E1E;
+--charcoal-700:#4A4A48;
+--brass-500:#A9825A;
+--brass-300:#C4A582;
+--sand-200:#D8CFC0;
+--paper-50:#FAFAF8;
+--white:#FFFFFF;
+--success:#5C7A5C;
+--danger:#A9503D;
+--text-heading:var(--charcoal-900);
+--text-body:var(--charcoal-700);
+--text-muted:color-mix(in oklch, var(--charcoal-700) 65%, var(--paper-50));
+--text-on-dark:var(--paper-50);
+--text-accent:var(--brass-500);
+--surface-page:var(--paper-50);
+--surface-card:var(--white);
+--surface-sunken:var(--sand-200);
+--surface-dark:var(--charcoal-900);
+--border-subtle:color-mix(in oklch, var(--charcoal-900) 12%, transparent);
+--border-strong:var(--charcoal-900);
+--border-accent:var(--brass-500);
+--focus-ring:color-mix(in oklch, var(--brass-500) 55%, transparent);
+}
