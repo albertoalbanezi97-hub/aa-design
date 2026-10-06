@@ -12,7 +12,7 @@
   };
 
   // ---------- content data ----------
-  const HOME_IMAGES = ['home-01.jpg','home-02.jpeg','home-03.jpg','home-04.jpg','home-05.jpeg','home-06.jpg','home-07.jpg','home-08.jpg','home-09.jpg','home-10.jpg'];
+  const HOME_IMAGES = ['home-01.jpg','home-02.jpg','home-03.jpg','home-04.jpg','home-05.jpg','home-06.jpg','home-07.jpg','home-08.jpg','home-09.jpg','home-10.jpg','home-11.jpg','home-12.jpg','home-13.jpg','home-14.jpg'];
   const HOME_ZOOM_DIRS = ['homeZoomIn','homeZoomOut','homeZoomOut','homeZoomIn','homeZoomIn','homeZoomOut','homeZoomIn','homeZoomOut','homeZoomOut','homeZoomIn'];
 
   const PROJECT_TYPES = [
