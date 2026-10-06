@@ -6,7 +6,8 @@
     contactEmail: 'info.aadesign@yahoo.com',
     contactPhone: '(647) 878-3117',
     slideSeconds: 10,      // seconds each hero slideshow image is shown (3-20)
-    alwaysShowCaptions: false
+    alwaysShowCaptions: false,
+    calLink: 'aa-design/15min?overlayCalendar=true'
   };
 
   // ---------- content data ----------
@@ -212,6 +213,56 @@
     });
   }
 
+  // ---------- Cal.com inline embed (official loader snippet, lazy-initialized) ----------
+  // See https://cal.com/docs/developing/guides/platform/embed — this shim just
+  // queues calls until the real embed.js script (loaded once) is ready.
+  function loadCalEmbedShim() {
+    (function (C, A, L) {
+      let p = function (a, ar) { a.q.push(ar); };
+      let d = C.document;
+      C.Cal = C.Cal || function () {
+        let cal = C.Cal;
+        let ar = arguments;
+        if (!cal.loaded) {
+          cal.ns = {};
+          cal.q = cal.q || [];
+          d.head.appendChild(d.createElement('script')).src = A;
+          cal.loaded = true;
+        }
+        if (ar[0] === L) {
+          const api = function () { p(api, arguments); };
+          const namespace = ar[1];
+          api.q = api.q || [];
+          if (typeof namespace === 'string') {
+            cal.ns[namespace] = cal.ns[namespace] || api;
+            p(cal.ns[namespace], ar);
+            p(cal, ['initNamespace', namespace]);
+          } else p(cal, ar);
+          return;
+        }
+        p(cal, ar);
+      };
+    })(window, 'https://app.cal.com/embed/embed.js', 'init');
+  }
+
+  let calEmbedInitialized = false;
+  function initCalEmbedOnce() {
+    if (calEmbedInitialized) return;
+    calEmbedInitialized = true;
+    loadCalEmbedShim();
+    window.Cal('init', '15min', { origin: 'https://cal.com' });
+    window.Cal.ns['15min']('inline', {
+      elementOrSelector: '#cal-inline',
+      config: { layout: 'month_view' },
+      calLink: CONFIG.calLink
+    });
+    window.Cal.ns['15min']('ui', {
+      cssVarsPerTheme: { light: { 'cal-brand': '#A9825A' }, dark: { 'cal-brand': '#A9825A' } },
+      hideEventTypeDetails: false,
+      layout: 'month_view'
+    });
+  }
+
   // ---------- tabs ----------
   function initTabs() {
     const panels = document.querySelectorAll('.tab-panel');
@@ -232,6 +283,7 @@
       document.querySelectorAll('.nav-link').forEach((link) => {
         link.classList.toggle('active', link.dataset.tabTarget === key);
       });
+      if (key === 'contact') initCalEmbedOnce();
       window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
     }
 
