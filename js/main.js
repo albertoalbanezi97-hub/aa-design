@@ -7,7 +7,8 @@
     contactPhone: '(647) 878-3117',
     slideSeconds: 10,      // seconds each hero slideshow image is shown (3-20)
     alwaysShowCaptions: false,
-    calLink: 'aa-design/15min?overlayCalendar=true'
+    calLink: 'aa-design/15min?overlayCalendar=true',
+    web3formsAccessKey: '63185db1-d4a3-43c4-b482-60069b7dda56'
   };
 
   // ---------- content data ----------
@@ -295,13 +296,41 @@
   }
 
   // ---------- contact form ----------
+  // Submits straight to Web3Forms over fetch so the email sends in the
+  // background — no mailto: link, so no desktop mail client ever opens.
   function initContactForm() {
     const form = document.getElementById('contact-form');
     const thanks = document.getElementById('contact-thanks');
-    form.addEventListener('submit', (e) => {
+    const errorEl = document.getElementById('contact-error');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const submitLabel = submitBtn.textContent;
+
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      form.hidden = true;
-      thanks.hidden = false;
+      errorEl.hidden = true;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+
+      const data = new FormData(form);
+      data.append('access_key', CONFIG.web3formsAccessKey);
+      data.append('subject', `New enquiry from ${data.get('name')} — AA-Design website`);
+      data.append('from_name', 'AA-Design website');
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: data
+        });
+        const result = await res.json();
+        if (!result.success) throw new Error(result.message || 'Submission failed');
+        form.hidden = true;
+        thanks.hidden = false;
+      } catch (err) {
+        errorEl.hidden = false;
+        submitBtn.disabled = false;
+        submitBtn.textContent = submitLabel;
+      }
     });
   }
 

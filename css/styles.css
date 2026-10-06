@@ -787,6 +787,28 @@ body.always-captions .caption { opacity: 1; }
 
 .contact-form textarea { resize: vertical; }
 
+.form-error {
+  background: color-mix(in oklch, var(--danger) 10%, var(--surface-card));
+  border: 1px solid var(--danger);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  font-size: var(--text-sm);
+  color: var(--charcoal-900);
+  margin: 0 0 18px;
+  text-align: left;
+}
+
+.form-error a { color: var(--danger); font-weight: 600; }
+
+.botcheck-field {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* ---------- faq ---------- */
 .faq-list { max-width: 780px; margin: 0 auto; }
 

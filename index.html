@@ -162,7 +162,10 @@
         <p>We'll follow up within one business day.</p>
       </div>
 
+      <p class="form-error" id="contact-error" hidden>Something went wrong sending your message &mdash; please try again, or email us directly at <a href="mailto:info.aadesign@yahoo.com">info.aadesign@yahoo.com</a>.</p>
+
       <form class="contact-form" id="contact-form">
+        <input type="text" name="botcheck" class="botcheck-field" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div>
           <label for="field-name">Name</label>
           <input id="field-name" name="name" required>
