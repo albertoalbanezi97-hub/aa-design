@@ -138,7 +138,6 @@
       <div class="type-card">
         <div class="media">
           <img src="${p.img}" alt="${escapeHtml(p.title)}">
-          ${p.caption ? `<div class="caption">${escapeHtml(p.caption)}</div>` : ''}
         </div>
         <div class="body">
           <h3>${escapeHtml(p.title)}</h3>
