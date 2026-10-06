@@ -154,9 +154,8 @@ img { max-width: 100%; }
 
 .site-header .logo-link img {
   height: 50px;
-  width: 50px;
+  width: auto;
   object-fit: contain;
-  border-radius: var(--radius-sm);
 }
 
 .site-nav {
@@ -888,9 +887,8 @@ body.always-captions .caption { opacity: 1; }
 
 .site-footer .footer-brand img {
   height: 40px;
-  width: 40px;
+  width: auto;
   object-fit: contain;
-  border-radius: var(--radius-sm);
 }
 
 .site-footer .footer-brand span {
