@@ -763,6 +763,8 @@ body.always-captions .caption { opacity: 1; }
   text-align: left;
 }
 
+.contact-form[hidden] { display: none; }
+
 .contact-form label {
   display: block;
   font-size: var(--text-xs);
