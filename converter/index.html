@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Green Convert &mdash; Batch Image Converter</title>
+<meta name="description" content="Desktop batch image converter: convert, compress and crop whole folders of images to BMP, EPS, GIF, HDR, EXR, ICO, JPG, PNG, SVG, TGA, TIFF, WBMP and WebP — entirely in your browser.">
+<link rel="stylesheet" href="css/converter.css?v=1">
+</head>
+<body>
+
+<header class="app-bar">
+  <div class="brand">
+    <span class="brand-dot" aria-hidden="true"></span>
+    <span class="brand-name">Green<strong>Convert</strong></span>
+    <span class="brand-tag">batch convert &middot; compress &middot; crop</span>
+  </div>
+  <div class="app-bar-right">
+    <span class="chip" id="fs-support-chip" title="Folder access support">checking&hellip;</span>
+    <span class="chip chip-count"><strong id="chip-count">0</strong>&nbsp;images</span>
+  </div>
+</header>
+
+<main class="workspace">
+
+  <!-- ====================== 1 — CONTROLS ====================== -->
+  <section class="pane pane-controls" id="pane-1" aria-label="Controls">
+    <div class="pane-head">
+      <span class="pane-num">1</span>
+      <h2>Controls</h2>
+    </div>
+    <div class="pane-body" id="controls-scroll">
+
+      <div class="group">
+        <div class="group-title">Folders</div>
+        <button class="btn btn-primary btn-block" id="btn-pick-input">
+          <span class="ico">&#128193;</span> Select input folder
+        </button>
+        <button class="btn btn-ghost btn-block" id="btn-pick-files">
+          <span class="ico">&#43;</span> Add individual files
+        </button>
+        <button class="btn btn-outline btn-block" id="btn-pick-output">
+          <span class="ico">&#128190;</span> Select output folder
+        </button>
+        <label class="check"><input type="checkbox" id="opt-recursive" checked> Include sub-folders</label>
+        <label class="check"><input type="checkbox" id="opt-mirror"> Mirror sub-folder structure on save</label>
+        <div class="path-row"><span class="path-label">In</span><span class="path" id="path-input">— not selected —</span></div>
+        <div class="path-row"><span class="path-label">Out</span><span class="path" id="path-output">— not selected —</span></div>
+        <button class="btn btn-danger-ghost btn-block" id="btn-clear">Clear list</button>
+      </div>
+
+      <div class="group">
+        <div class="group-title">Convert</div>
+        <label class="field">
+          <span>Output format</span>
+          <select id="opt-format">
+            <optgroup label="Web / common">
+              <option value="png">PNG &mdash; lossless, alpha</option>
+              <option value="jpg" selected>JPG &mdash; photos, small</option>
+              <option value="webp">WebP &mdash; modern, small</option>
+              <option value="avif">AVIF &mdash; smallest (browser support varies)</option>
+              <option value="gif">GIF &mdash; 256 colours</option>
+            </optgroup>
+            <optgroup label="Design / print">
+              <option value="tiff">TIFF &mdash; uncompressed RGB(A)</option>
+              <option value="bmp">BMP &mdash; Windows bitmap</option>
+              <option value="tga">TGA &mdash; Targa</option>
+              <option value="eps">EPS &mdash; PostScript</option>
+              <option value="svg">SVG &mdash; raster embedded</option>
+            </optgroup>
+            <optgroup label="Special">
+              <option value="ico">ICO &mdash; icon / favicon</option>
+              <option value="wbmp">WBMP &mdash; 1-bit mono</option>
+              <option value="hdr">HDR &mdash; Radiance RGBE</option>
+              <option value="exr">EXR &mdash; OpenEXR half float</option>
+            </optgroup>
+          </select>
+        </label>
+
+        <div class="field-inline" data-when-format="jpg webp avif svg">
+          <label class="field">
+            <span>Quality <b id="quality-val">90</b>%</span>
+            <input type="range" id="opt-quality" min="5" max="100" value="90">
+          </label>
+        </div>
+
+        <label class="field" data-when-format="gif">
+          <span>GIF colours</span>
+          <select id="opt-gif-colors">
+            <option value="256" selected>256</option>
+            <option value="128">128</option>
+            <option value="64">64</option>
+            <option value="32">32</option>
+            <option value="16">16</option>
+          </select>
+        </label>
+
+        <div class="field" data-when-format="ico">
+          <span>ICO sizes</span>
+          <div class="pill-row" id="ico-sizes">
+            <label class="pill"><input type="checkbox" value="16" checked> 16</label>
+            <label class="pill"><input type="checkbox" value="32" checked> 32</label>
+            <label class="pill"><input type="checkbox" value="48" checked> 48</label>
+            <label class="pill"><input type="checkbox" value="64"> 64</label>
+            <label class="pill"><input type="checkbox" value="128"> 128</label>
+            <label class="pill"><input type="checkbox" value="256" checked> 256</label>
+          </div>
+        </div>
+
+        <label class="check" data-when-format="wbmp"><input type="checkbox" id="opt-wbmp-dither" checked> Dither (Floyd&ndash;Steinberg)</label>
+
+        <label class="field" data-when-format="jpg eps wbmp hdr bmp tga tiff">
+          <span>Matte colour behind transparency</span>
+          <input type="color" id="opt-background" value="#ffffff">
+        </label>
+
+        <label class="check" data-when-format="png webp bmp tga tiff gif exr ico">
+          <input type="checkbox" id="opt-keep-alpha" checked> Keep transparency
+        </label>
+      </div>
+
+      <div class="group">
+        <div class="group-title">Compress &amp; resize</div>
+        <label class="field">
+          <span>Resize mode</span>
+          <select id="opt-resize-mode">
+            <option value="none" selected>Keep original size</option>
+            <option value="maxbox">Fit inside max width &times; height</option>
+            <option value="percent">Scale by percentage</option>
+            <option value="exact">Exact size</option>
+          </select>
+        </label>
+        <div class="field-inline" data-when-resize="maxbox">
+          <label class="field"><span>Max W</span><input type="number" id="opt-max-w" value="1920" min="1"></label>
+          <label class="field"><span>Max H</span><input type="number" id="opt-max-h" value="1080" min="1"></label>
+        </div>
+        <div class="field-inline" data-when-resize="percent">
+          <label class="field"><span>Scale %</span><input type="number" id="opt-percent" value="50" min="1" max="400"></label>
+        </div>
+        <div class="field-inline" data-when-resize="exact">
+          <label class="field"><span>Width</span><input type="number" id="opt-exact-w" value="1200" min="1"></label>
+          <label class="field"><span>Height</span><input type="number" id="opt-exact-h" value="1200" min="1"></label>
+          <label class="field"><span>Fit</span>
+            <select id="opt-fit">
+              <option value="cover">Cover (crop)</option>
+              <option value="contain">Contain (pad)</option>
+              <option value="stretch">Stretch</option>
+            </select>
+          </label>
+        </div>
+        <label class="check"><input type="checkbox" id="opt-target-on"> Compress to target size</label>
+        <label class="field" data-when-target="1">
+          <span>Target size (KB per image)</span>
+          <input type="number" id="opt-target-kb" value="300" min="5">
+        </label>
+      </div>
+
+      <div class="group">
+        <div class="group-title">Crop</div>
+        <label class="field">
+          <span>Aspect lock</span>
+          <select id="opt-crop-lock">
+            <option value="free" selected>Free</option>
+            <option value="square">Square 1:1</option>
+            <option value="4:3">Rectangle 4:3</option>
+            <option value="3:2">Rectangle 3:2</option>
+            <option value="16:9">Rectangle 16:9</option>
+            <option value="original">Original ratio</option>
+            <option value="custom">Custom&hellip;</option>
+          </select>
+        </label>
+        <div class="field-inline" data-when-crop="custom">
+          <label class="field"><span>Ratio W</span><input type="number" id="opt-crop-rw" value="5" min="1"></label>
+          <label class="field"><span>Ratio H</span><input type="number" id="opt-crop-rh" value="7" min="1"></label>
+        </div>
+        <button class="btn btn-primary btn-block" id="btn-open-crop">
+          <span class="ico">&#9986;</span> Crop selected image&hellip;
+        </button>
+        <button class="btn btn-outline btn-block" id="btn-apply-crop-all">Apply this crop to all images</button>
+        <button class="btn btn-ghost btn-block" id="btn-clear-crop">Clear crop on selected</button>
+        <button class="btn btn-ghost btn-block" id="btn-clear-crop-all">Clear all crops</button>
+        <p class="hint">Click an image in the preview, drag a box, move it, resize from any corner or edge. The result preview shows the full crop, unlocked.</p>
+      </div>
+
+      <div class="group">
+        <div class="group-title">File naming</div>
+        <label class="field"><span>Prefix</span><input type="text" id="opt-prefix" placeholder="e.g. web_"></label>
+        <label class="field"><span>Suffix</span><input type="text" id="opt-suffix" placeholder="e.g. _1200"></label>
+        <label class="check"><input type="checkbox" id="opt-lowercase"> Lowercase file names</label>
+        <label class="check"><input type="checkbox" id="opt-overwrite" checked> Overwrite existing files in output folder</label>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== 2 — PREVIEW ====================== -->
+  <section class="pane pane-preview" id="pane-2" aria-label="Preview">
+    <div class="pane-head">
+      <span class="pane-num">2</span>
+      <h2>Preview</h2>
+      <div class="view-switch" role="tablist" aria-label="Preview view">
+        <button class="vs-btn is-active" id="view-individual" role="tab" aria-selected="true">Individual</button>
+        <button class="vs-btn" id="view-grid" role="tab" aria-selected="false">Grid</button>
+      </div>
+      <div class="side-switch">
+        <button class="vs-btn is-active" id="side-after">Result</button>
+        <button class="vs-btn" id="side-before">Original</button>
+      </div>
+    </div>
+
+    <div class="pane-body preview-body">
+      <div class="empty-state" id="empty-state">
+        <div class="empty-ring"></div>
+        <h3>No images loaded</h3>
+        <p>Select an input folder, add files, or drop a folder anywhere in this window.</p>
+      </div>
+
+      <!-- individual view -->
+      <div class="view view-single" id="single-view" hidden>
+        <div class="single-stage" id="single-stage">
+          <img id="single-img" alt="Selected image preview">
+          <div class="crop-badge" id="crop-badge" hidden>cropped</div>
+        </div>
+        <div class="single-meta" id="single-meta"></div>
+        <div class="single-nav">
+          <button class="btn btn-ghost btn-sm" id="btn-prev">&#8249; Prev</button>
+          <span class="counter" id="single-counter">0 / 0</span>
+          <button class="btn btn-ghost btn-sm" id="btn-next">Next &#8250;</button>
+          <button class="btn btn-outline btn-sm" id="btn-crop-this">Crop this image</button>
+        </div>
+      </div>
+
+      <!-- grid view -->
+      <div class="view view-grid" id="grid-view" hidden>
+        <div class="grid-toolbar">
+          <label class="check"><input type="checkbox" id="grid-select-all" checked> Select all</label>
+          <span class="grid-info" id="grid-info"></span>
+          <label class="field field-tiny"><span>Tile</span>
+            <input type="range" id="grid-size" min="90" max="320" value="160">
+          </label>
+        </div>
+        <div class="grid-wrap" id="grid-wrap"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== 3 — PROCESS & SAVE ====================== -->
+  <section class="pane pane-process" id="pane-3" aria-label="Process and save">
+    <div class="pane-head">
+      <span class="pane-num">3</span>
+      <h2>Process &amp; Save</h2>
+      <div class="progress-inline">
+        <div class="bar"><div class="bar-fill" id="bar-fill"></div></div>
+        <span class="progress-text" id="progress-text">idle</span>
+      </div>
+    </div>
+    <div class="pane-body process-body">
+
+      <div class="action-col">
+        <div class="col-title">Process</div>
+        <button class="btn btn-primary btn-lg" id="btn-process-all">
+          <span class="ico">&#9881;</span> Convert all
+        </button>
+        <button class="btn btn-outline btn-lg" id="btn-process-selected">Convert selected only</button>
+        <button class="btn btn-ghost" id="btn-process-this">Convert this image</button>
+        <button class="btn btn-danger-ghost" id="btn-cancel" disabled>Stop</button>
+      </div>
+
+      <div class="action-col action-col-single">
+        <div class="col-title">Single image <span class="col-badge badge-single">one</span></div>
+        <button class="btn btn-single" id="btn-save-this">
+          <span class="ico">&#128190;</span> Save As&hellip; (this image)
+        </button>
+        <button class="btn btn-single" id="btn-save-this-out">Save this to output folder</button>
+        <button class="btn btn-single-ghost" id="btn-download-this">Download this image</button>
+      </div>
+
+      <div class="action-col action-col-batch">
+        <div class="col-title">Batch <span class="col-badge badge-batch">all</span></div>
+        <button class="btn btn-batch" id="btn-save-all-out">
+          <span class="ico">&#128194;</span> Save ALL to output folder
+        </button>
+        <button class="btn btn-batch" id="btn-save-selected-out">Save selected to output folder</button>
+        <button class="btn btn-batch-ghost" id="btn-download-zip">Download ALL as .zip</button>
+      </div>
+
+      <div class="log-col">
+        <div class="col-title">Activity</div>
+        <ul class="log" id="log"></ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ====================== CROP MODAL ====================== -->
+<div class="modal" id="crop-modal" hidden>
+  <div class="modal-inner">
+    <div class="modal-head">
+      <h3 id="crop-title">Crop</h3>
+      <div class="modal-tools">
+        <label class="field field-tiny"><span>Lock</span>
+          <select id="crop-lock-modal">
+            <option value="free">Free</option>
+            <option value="square">Square 1:1</option>
+            <option value="4:3">4:3</option>
+            <option value="3:2">3:2</option>
+            <option value="16:9">16:9</option>
+            <option value="original">Original</option>
+            <option value="custom">Custom</option>
+          </select>
+        </label>
+        <span class="crop-dims" id="crop-dims">—</span>
+        <button class="btn btn-ghost btn-sm" id="crop-reset">Reset</button>
+        <button class="btn btn-ghost btn-sm" id="crop-full">Select all</button>
+        <button class="btn btn-ghost btn-sm" id="crop-center">Center 80%</button>
+      </div>
+      <button class="modal-close" id="crop-close" aria-label="Close">&times;</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="crop-stage" id="crop-stage">
+        <img id="crop-img" alt="Image being cropped" draggable="false">
+        <div class="crop-shade" id="crop-shade"></div>
+        <div class="crop-box" id="crop-box" hidden>
+          <div class="crop-grid"></div>
+          <div class="handle h-nw" data-h="nw"></div>
+          <div class="handle h-n"  data-h="n"></div>
+          <div class="handle h-ne" data-h="ne"></div>
+          <div class="handle h-e"  data-h="e"></div>
+          <div class="handle h-se" data-h="se"></div>
+          <div class="handle h-s"  data-h="s"></div>
+          <div class="handle h-sw" data-h="sw"></div>
+          <div class="handle h-w"  data-h="w"></div>
+        </div>
+      </div>
+
+      <aside class="crop-side">
+        <div class="col-title">Result preview <span class="col-badge">unlocked</span></div>
+        <div class="crop-result" id="crop-result"><canvas id="crop-result-canvas"></canvas></div>
+        <div class="crop-numbers">
+          <label class="field field-tiny"><span>X</span><input type="number" id="crop-x" min="0"></label>
+          <label class="field field-tiny"><span>Y</span><input type="number" id="crop-y" min="0"></label>
+          <label class="field field-tiny"><span>W</span><input type="number" id="crop-w" min="1"></label>
+          <label class="field field-tiny"><span>H</span><input type="number" id="crop-h" min="1"></label>
+        </div>
+        <p class="hint">Drag on the image to draw a box. Drag inside to move it. Pull any corner or edge to resize. Arrow keys nudge, Shift+arrows resize.</p>
+        <div class="crop-actions">
+          <button class="btn btn-single" id="crop-apply">Apply to this image</button>
+          <button class="btn btn-batch" id="crop-apply-all">Apply to ALL images</button>
+          <button class="btn btn-ghost" id="crop-cancel">Cancel</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="file-input" multiple accept="image/*,.tga,.targa,.tif,.tiff,.heic,.avif" hidden>
+<input type="file" id="dir-input" webkitdirectory directory multiple hidden>
+
+<div class="drop-veil" id="drop-veil" hidden><div>Drop images or a folder</div></div>
+
+<script src="js/encoders.js?v=1"></script>
+<script src="js/core.js?v=1"></script>
+<script src="js/crop.js?v=1"></script>
+<script src="js/app.js?v=1"></script>
+</body>
+</html>
