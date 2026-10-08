@@ -19,6 +19,30 @@ Opening `index.html` directly from disk also works, but browsers block the
 folder-picker API on `file://` URLs — the app detects this, says so in the
 header chip, and falls back to the file chooser plus `.zip` download.
 
+## Putting it on your desktop
+
+Green Convert is an installable app, so it can live on your desktop with its own
+icon and window instead of a browser tab.
+
+1. Serve it (see above) and open it in **Chrome or Edge** — installing needs
+   `http://localhost`, not a `file://` path.
+2. Click **Install app** in the top-right of the header, or use the install icon
+   in the browser's address bar (Chrome: ⋮ → Cast, save and share → Install page
+   as app).
+3. Choose **Create shortcut on desktop** when the browser offers it.
+
+   - **Windows** — also lands in the Start menu; right-click → Pin to taskbar.
+   - **macOS** — appears in Launchpad and `/Applications/Chrome Apps`; drag it to
+     the Dock to keep it there.
+   - **Linux** — a `.desktop` entry is written to `~/.local/share/applications`.
+
+Once installed it works offline (a service worker caches the app shell), and
+because the app is registered as a file handler you can right-click any image →
+**Open with → Green Convert** to load it straight into the converter.
+
+If you'd rather not install anything, a plain browser bookmark works fine — the
+app is identical either way.
+
 ## What it does
 
 **Input** — pick an input folder (optionally including sub-folders), add
@@ -80,6 +104,9 @@ processing and saving.
 ```
 converter/
   index.html          markup and layout
+  manifest.webmanifest  app metadata for desktop install
+  sw.js               service worker (offline app shell)
+  icons/              app icons (16–512 px, maskable, favicon.ico)
   css/converter.css   green-palette theme
   js/encoders.js      binary image encoders (BMP, GIF, ICO, TGA, TIFF, WBMP, EPS, HDR, EXR, SVG)
   js/core.js          decoding, resize/crop, format registry, pipeline, ZIP writer

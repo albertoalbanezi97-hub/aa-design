@@ -865,8 +865,73 @@
     });
   }
 
+  /* ---- installable desktop app (PWA) --------------------------------- */
+
+  var deferredInstall = null;
+
+  function setupInstall() {
+    var btn = $('btn-install');
+
+    window.addEventListener('beforeinstallprompt', function (ev) {
+      ev.preventDefault();            // show our own button instead of the mini-infobar
+      deferredInstall = ev;
+      btn.hidden = false;
+    });
+
+    btn.addEventListener('click', async function () {
+      if (!deferredInstall) return;
+      btn.disabled = true;
+      deferredInstall.prompt();
+      var choice = await deferredInstall.userChoice;
+      deferredInstall = null;
+      btn.disabled = false;
+      if (choice && choice.outcome === 'accepted') {
+        btn.hidden = true;
+        log('Installed — Green Convert now has its own desktop icon and window.', 'ok');
+      }
+    });
+
+    window.addEventListener('appinstalled', function () {
+      deferredInstall = null;
+      btn.hidden = true;
+      log('Installed — Green Convert now has its own desktop icon and window.', 'ok');
+    });
+
+    // Already running as the installed app: nothing to offer.
+    if (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) {
+      btn.hidden = true;
+    }
+
+    if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+      window.addEventListener('load', function () {
+        // The worker must live at the app root: a script under js/ cannot
+        // claim the parent scope without a Service-Worker-Allowed header.
+        navigator.serviceWorker.register('sw.js', { scope: './' }).catch(function (err) {
+          // Not fatal: the app runs fine without offline caching.
+          console.warn('Service worker registration failed:', err && err.message);
+        });
+      });
+    }
+
+    // Images opened from the OS with the installed app ("Open with").
+    if ('launchQueue' in window && window.launchQueue && window.launchQueue.setConsumer) {
+      window.launchQueue.setConsumer(async function (params) {
+        if (!params || !params.files || !params.files.length) return;
+        var files = [];
+        for (var i = 0; i < params.files.length; i++) {
+          try { files.push(await params.files[i].getFile()); } catch (err) { /* skip */ }
+        }
+        if (files.length) {
+          log('Opened ' + files.length + ' file(s) from the desktop.', 'ok');
+          addFiles(files);
+        }
+      });
+    }
+  }
+
   function init() {
     wire();
+    setupInstall();
     syncConditionalFields();
     detectCapabilities();
     setProgress(0, 0, 'idle');
