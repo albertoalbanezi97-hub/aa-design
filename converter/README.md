@@ -3,21 +3,91 @@
 A desktop web app that converts, compresses and crops whole folders of images.
 Everything runs locally in the browser: no uploads, no server, no dependencies.
 
-## Running it
+## Opening the app
 
-Chrome, Edge or Opera on desktop give the full experience (reading an input
-folder and writing straight into an output folder):
+There are two ways to open it, and the difference matters: double-clicking is
+quickest, running a small local server unlocks everything.
+
+### Step 1 — get the files onto your computer
+
+The app is the `converter` folder of this repository. Either:
+
+- **Download:** on the repository page, click the green **Code** button →
+  **Download ZIP** → unzip it; or
+- **Clone:** `git clone https://github.com/albertoalbanezi97-hub/aa-design.git`
+
+Either way you end up with `aa-design/converter/`, which contains `index.html`.
+
+### Way 1 — just double-click it
+
+Open `aa-design/converter/index.html`. It opens in your default browser and the
+app runs. To use a different browser, right-click the file → **Open with** →
+Chrome, Firefox, Safari or Edge.
+
+**What works:** loading images, every output format, compressing, the crop tool,
+and downloading results — one at a time or the whole batch as a `.zip`.
+
+**What you lose:** browsers restrict the folder-picker API on `file://` pages,
+so saving straight into an output folder may be unavailable — use **Download ALL
+as .zip** instead. You also cannot install the app to your desktop this way.
+
+Good for a quick conversion; not the full experience.
+
+### Way 2 — run a small local server (full features)
+
+This is what enables the output folder picker and the **Install app** button.
+It is one command.
+
+**Open a terminal in the `converter` folder**
+
+- **Windows:** open the folder in File Explorer, click the address bar, type
+  `cmd`, press Enter.
+- **macOS:** right-click the folder → Services → **New Terminal at Folder**.
+- **Linux:** right-click inside the folder → **Open in Terminal**.
+
+**Start the server** — whichever you already have:
 
 ```bash
-cd converter
-npx http-server -p 8080        # or: python3 -m http.server 8080
+python3 -m http.server 8080
+```
+```bash
+npx http-server -p 8080
 ```
 
-then open <http://localhost:8080/>.
+Python ships with macOS and most Linux systems; on Windows use the `npx` line if
+you have Node, or install Python from python.org.
 
-Opening `index.html` directly from disk also works, but browsers block the
-folder-picker API on `file://` URLs — the app detects this, says so in the
-header chip, and falls back to the file chooser plus `.zip` download.
+You will see a line like `Serving HTTP on :: port 8080`. **Leave that window
+open** — closing it stops the app.
+
+**Open the browser** at:
+
+```
+http://localhost:8080
+```
+
+That works in any browser — Chrome, Edge, Firefox, Safari, Brave, Opera. When
+you are finished, press `Ctrl+C` in the terminal to stop the server.
+
+### What each browser supports
+
+|                              | Chrome / Edge / Opera | Firefox | Safari |
+|------------------------------|-----------------------|---------|--------|
+| Convert, compress, crop      | yes                   | yes     | yes    |
+| Pick an **input folder**     | yes (folder picker)   | via file chooser | via file chooser |
+| Save into an **output folder** | yes                 | no — use .zip | no — use .zip |
+| Download all as `.zip`       | yes                   | yes     | yes    |
+| **Install app** (desktop icon) | yes                 | no      | no     |
+| WebP / AVIF output           | both                  | WebP only | WebP only |
+
+The app works this out for itself: the chip at the top right reads
+`folder access: on` or `limited — zip download`, and any format your browser
+cannot write is greyed out in the format list. Firefox and Safari do everything
+else exactly the same — results arrive as downloads instead of being written
+into a folder.
+
+**Recommended:** Chrome or Edge at `http://localhost:8080`, then install the app
+once (below) so it gets its own icon and window.
 
 ## Putting it on your desktop
 
