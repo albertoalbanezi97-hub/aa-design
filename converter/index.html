@@ -5,7 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Green Convert &mdash; Batch Image Converter</title>
 <meta name="description" content="Desktop batch image converter: convert, compress and crop whole folders of images to BMP, EPS, GIF, HDR, EXR, ICO, JPG, PNG, SVG, TGA, TIFF, WBMP and WebP — entirely in your browser.">
-<link rel="stylesheet" href="css/converter.css?v=1">
+<meta name="theme-color" content="#050807">
+<meta name="application-name" content="Green Convert">
+<link rel="manifest" href="manifest.webmanifest?v=1">
+<link rel="icon" href="icons/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="stylesheet" href="css/converter.css?v=2">
 </head>
 <body>
 
@@ -18,6 +25,9 @@
   <div class="app-bar-right">
     <span class="chip" id="fs-support-chip" title="Folder access support">checking&hellip;</span>
     <span class="chip chip-count"><strong id="chip-count">0</strong>&nbsp;images</span>
+    <button class="btn btn-outline btn-sm" id="btn-install" hidden title="Install Green Convert as a desktop app">
+      <span class="ico">&#11015;</span> Install app
+    </button>
   </div>
 </header>
 
@@ -358,9 +368,9 @@
 
 <div class="drop-veil" id="drop-veil" hidden><div>Drop images or a folder</div></div>
 
-<script src="js/encoders.js?v=1"></script>
-<script src="js/core.js?v=1"></script>
-<script src="js/crop.js?v=1"></script>
-<script src="js/app.js?v=1"></script>
+<script src="js/encoders.js?v=2"></script>
+<script src="js/core.js?v=2"></script>
+<script src="js/crop.js?v=2"></script>
+<script src="js/app.js?v=2"></script>
 </body>
 </html>
