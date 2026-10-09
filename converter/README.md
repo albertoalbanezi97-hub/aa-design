@@ -69,6 +69,25 @@ http://localhost:8080
 That works in any browser — Chrome, Edge, Firefox, Safari, Brave, Opera. When
 you are finished, press `Ctrl+C` in the terminal to stop the server.
 
+### Windows: one-click launcher and desktop icon
+
+For a local copy on Windows (for example in `I:\Claude\Image Convertor App`),
+copy the whole `converter` folder there, then use the two scripts inside it:
+
+1. **`Create Desktop Shortcut.cmd`** — double-click once. It puts a
+   **Green Convert** icon on your desktop, with the app's green icon, pointing
+   back at the folder you copied.
+2. **`Start Green Convert.cmd`** — what the shortcut runs. It starts a local
+   server in that folder and opens the app in your default browser.
+
+The launcher finds Python or Node automatically; if neither is installed it
+opens the app directly and tells you what that costs (no output-folder saving,
+no installing to the desktop). A minimised *Green Convert server* window stays
+open while the app runs — close it to stop the app.
+
+Nothing is installed system-wide, and the whole app stays inside that one
+folder; delete the folder and the shortcut to remove it.
+
 ### What each browser supports
 
 |                              | Chrome / Edge / Opera | Firefox | Safari |
@@ -174,6 +193,9 @@ processing and saving.
 ```
 converter/
   index.html          markup and layout
+  Start Green Convert.cmd       Windows launcher (local server + browser)
+  Create Desktop Shortcut.cmd   Windows: puts an icon on the desktop
+  create-shortcut.ps1           helper used by the line above
   manifest.webmanifest  app metadata for desktop install
   sw.js               service worker (offline app shell)
   icons/              app icons (16–512 px, maskable, favicon.ico)
