@@ -69,6 +69,30 @@ http://localhost:8080
 That works in any browser — Chrome, Edge, Firefox, Safari, Brave, Opera. When
 you are finished, press `Ctrl+C` in the terminal to stop the server.
 
+### Way 3 — the single-file build (nothing to install, nothing to copy)
+
+`dist/Green Convert.html` is the whole app — stylesheet, all four scripts and
+the icons inlined — in one ~240 KB file. Put it anywhere (a USB stick, a
+network drive, `I:\Claude\Image Convertor App`) and double-click it.
+
+For a desktop icon: right-click the file -> **Show more options** -> **Send
+to** -> **Desktop (create shortcut)**.
+
+It converts, compresses, crops and downloads exactly like the served app,
+single files or the whole batch as a `.zip`. What it gives up, because all
+three need a real `http(s)` origin: writing straight into an output folder,
+the service worker, and the **Install app** button.
+
+Rebuild it after changing the app:
+
+```bash
+cd converter
+python3 build-single-file.py
+```
+
+The script fails loudly if anything it expects to inline has moved, so a stale
+bundle cannot be produced silently.
+
 ### Windows: one-click launcher and desktop icon
 
 For a local copy on Windows (for example in `I:\Claude\Image Convertor App`),
@@ -196,6 +220,8 @@ converter/
   Start Green Convert.cmd       Windows launcher (local server + browser)
   Create Desktop Shortcut.cmd   Windows: puts an icon on the desktop
   create-shortcut.ps1           helper used by the line above
+  build-single-file.py          bundles everything into dist/
+  dist/Green Convert.html       the single-file build
   manifest.webmanifest  app metadata for desktop install
   sw.js               service worker (offline app shell)
   icons/              app icons (16–512 px, maskable, favicon.ico)
