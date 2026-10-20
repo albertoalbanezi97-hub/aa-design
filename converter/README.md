@@ -206,6 +206,14 @@ grid view of every image, with per-tile selection, status and a crop shortcut.
 Sub-folder structure can be mirrored into the output folder, and names can take
 a prefix/suffix and be lower-cased.
 
+## How this was built
+
+`docs/Green Convert - conversation.docx` is the transcript of the conversation
+that produced this app — what was asked for, what was built, what was tested,
+and the limits that came up along the way (notably that the Windows scripts
+were written but never executed, and that a double-clicked copy cannot write
+into an output folder).
+
 ## Layout
 
 The window follows the reference wireframe: panel **1** (left, full height) is
@@ -222,6 +230,7 @@ converter/
   create-shortcut.ps1           helper used by the line above
   build-single-file.py          bundles everything into dist/
   dist/Green Convert.html       the single-file build
+  docs/                         how this app came to be (conversation transcript)
   manifest.webmanifest  app metadata for desktop install
   sw.js               service worker (offline app shell)
   icons/              app icons (16–512 px, maskable, favicon.ico)
