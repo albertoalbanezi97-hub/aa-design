@@ -208,11 +208,11 @@ a prefix/suffix and be lower-cased.
 
 ## How this was built
 
-`docs/Green Convert - conversation.docx` is the transcript of the conversation
-that produced this app — what was asked for, what was built, what was tested,
-and the limits that came up along the way (notably that the Windows scripts
-were written but never executed, and that a double-clicked copy cannot write
-into an output folder).
+`docs/Green Convert - conversation.docx` is the full transcript of the
+conversation that produced this app — every exchange in order, unabridged:
+what was asked for, what was built, what was tested, and the limits that came
+up along the way (notably that the Windows scripts were written but never
+executed, and that a double-clicked copy cannot write into an output folder).
 
 ## Layout
 
